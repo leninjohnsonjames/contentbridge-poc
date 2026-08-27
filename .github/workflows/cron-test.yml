@@ -1,0 +1,17 @@
+name: Cron Test
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "*/5 * * * *"
+
+jobs:
+  cron-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Confirm scheduled execution
+        run: |
+          echo "Cron test is working"
+          echo "Triggered by: ${{ github.event_name }}"
+          echo "UTC time: $(date -u)"
