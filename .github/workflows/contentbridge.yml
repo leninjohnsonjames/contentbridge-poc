@@ -1,0 +1,37 @@
+name: ContentBridge
+
+on:
+  schedule:
+    - cron: "*/15 * * * *"   # every 15 minutes
+  workflow_dispatch: {}       # adds a manual "Run workflow" button in the Actions tab
+
+jobs:
+  run-contentbridge:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run ContentBridge
+        env:
+          JIRA_BASE_URL: ${{ secrets.JIRA_BASE_URL }}
+          JIRA_EMAIL: ${{ secrets.JIRA_EMAIL }}
+          JIRA_API_TOKEN: ${{ secrets.JIRA_API_TOKEN }}
+          JIRA_AUTH_MODE: ${{ secrets.JIRA_AUTH_MODE }}
+          JIRA_API_VERSION: ${{ secrets.JIRA_API_VERSION }}
+          JIRA_LABEL_CREATE: ${{ secrets.JIRA_LABEL_CREATE }}
+          JIRA_LABEL_UPDATE: ${{ secrets.JIRA_LABEL_UPDATE }}
+          JIRA_TARGET_STATUS: ${{ secrets.JIRA_TARGET_STATUS }}
+          CLAUDE_API_KEY: ${{ secrets.CLAUDE_API_KEY }}
+          WP_BASE_URL: ${{ secrets.WP_BASE_URL }}
+          WP_USER: ${{ secrets.WP_USER }}
+          WP_APP_PASSWORD: ${{ secrets.WP_APP_PASSWORD }}
+        run: python jira-to-wordpress.py
