@@ -10,6 +10,11 @@ jobs:
   run-contentbridge:
     runs-on: ubuntu-latest
     steps:
+      - name: Show trigger information
+        run: |
+          echo "Trigger: ${{ github.event_name }}"
+          echo "UTC time: $(date -u)"
+          echo "Branch: ${{ github.ref }}"
       - name: Check out repo
         uses: actions/checkout@v4
 
