@@ -1,9 +1,10 @@
 name: ContentBridge
 
 on:
+  workflow_dispatch:
+
   schedule:
-    - cron: "*/15 * * * *"   # every 15 minutes
-  workflow_dispatch: {}       # adds a manual "Run workflow" button in the Actions tab
+    - cron: "8/15 * * * *"
 
 jobs:
   run-contentbridge:
