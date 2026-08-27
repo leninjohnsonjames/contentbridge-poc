@@ -1,0 +1,7 @@
+processed_issues.json
+contentbridge.log
+launchd.log
+__pycache__/
+*.pyc
+.env
+venv/
