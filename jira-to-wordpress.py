@@ -45,6 +45,7 @@ JIRA_LABEL_CREATE  = os.getenv("JIRA_LABEL_CREATE", "contentbridge-poc")        
 JIRA_LABEL_UPDATE  = os.getenv("JIRA_LABEL_UPDATE", "contentbridge-update-poc")  # update an existing post by title
 JIRA_TARGET_STATUS = os.getenv("JIRA_TARGET_STATUS", "Code Review")   # status to move the ticket to once posted
 JIRA_SOURCE_STATUS = os.getenv("JIRA_SOURCE_STATUS", "To Do")         # only pick up tickets sitting in this status
+JIRA_PROJECT_KEY   = os.getenv("JIRA_PROJECT_KEY", "VDB") 
 
 CLAUDE_API_KEY  = os.getenv("CLAUDE_API_KEY", "sk-9s_96Ibr6qqgGX6VErBrrA")
 CLAUDE_MODEL    = "claude-sonnet-5"
@@ -84,7 +85,7 @@ def find_issues_by_labels(labels: list[str]) -> list[dict]:
     persist. It also means a ticket someone manually moved to "In Progress"
     or anywhere else mid-review won't get accidentally re-touched."""
     label_list = ", ".join(f'"{label}"' for label in labels)
-    jql = f'labels in ({label_list}) AND status = "{JIRA_SOURCE_STATUS}" order by created DESC'
+    jql = f'project = "{JIRA_PROJECT_KEY}"  AND labels in ({label_list}) AND status = "{JIRA_SOURCE_STATUS}" order by created DESC'
     data = _jira_get(
         f"/rest/api/{JIRA_API_VERSION}/search/jql",
         params={"jql": jql, "maxResults": 20, "fields": "summary,description,status,labels"},

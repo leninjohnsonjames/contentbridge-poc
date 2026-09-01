@@ -37,6 +37,7 @@ jobs:
           JIRA_LABEL_UPDATE: ${{ secrets.JIRA_LABEL_UPDATE }}
           JIRA_TARGET_STATUS: ${{ secrets.JIRA_TARGET_STATUS }}
           JIRA_SOURCE_STATUS: ${{ secrets.JIRA_SOURCE_STATUS }}
+          JIRA_PROJECT_KEY: ${{ secrets.JIRA_PROJECT_KEY }}
           CLAUDE_API_KEY: ${{ secrets.CLAUDE_API_KEY }}
           WP_BASE_URL: ${{ secrets.WP_BASE_URL }}
           WP_USER: ${{ secrets.WP_USER }}
